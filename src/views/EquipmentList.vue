@@ -20,11 +20,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useEquipmentStore } from '@/store/equipmentStore';
+const router = useRouter()
 const equipmentStore = useEquipmentStore()
 const euipmentList = ref(equipmentStore.euipmentList)
 const turnToDetail = () => {
-    console.log('turnTo')
+    console.log('detail')
+    router.push('/deailequipment')
 }
 </script>
 

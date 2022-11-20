@@ -43,11 +43,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeEach((guard) => {
-  console.log(guard)
-  if(guard.meta.title){
-    // document.title = guard.meta.title
-  }  
-})
 
 export default router
