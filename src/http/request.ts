@@ -1,21 +1,37 @@
-import config from '@/config/httpConfig' // 基础路径
-import service from './httpService' //封装的axios
+import { getCookie } from '@/util/cookieTool'
+import Request from './requestClass'
+import type { SearchForm } from './type/searchForm'
+
+const request = new Request({
+  headers: {
+    "x-csrf-token": getCookie("csrfToken"),
+  }
+})
 
 /**
- * get equipmentList optional key
+ * get equipmentList
  *
  */
-export const getEquipmentList = (key:string)=> service({
-  url: `${config.baseUrl}/equipments`,
+export const getEquipmentList = () => request.request({
+  url: `api/equipments`,
   method: 'GET',
-  params:key,
+})
+
+/**
+ * search equipment by searchContent\property\department
+ *
+ */
+export const searchEquipment = (searchForm: SearchForm) => request.request({
+  url: `api/equipments/search`,
+  method: 'POST',
+  data: searchForm
 })
 
 /**
  * get equipment info by id
  * 
  */
- export const getEquipmentInfo = (id:string)=> service({
-    url: `${config.baseUrl}/equipments/${id}`,
-    method: 'GET',
-  })
+export const getEquipmentInfo = (id: string) => request.request({
+  url: `api/equipments/${id}`,
+  method: 'GET',
+})

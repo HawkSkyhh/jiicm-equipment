@@ -1,28 +1,10 @@
+import type { SearchForm } from "@/http/type/searchForm"
+import type { CurrEquipmentInfo } from "@/types/CurrEquipmentInfo"
 import { defineStore } from "pinia"
+import { getEquipmentList, getEquipmentInfo, searchEquipment } from '@/http/request'
 export const useEquipmentStore = defineStore('EquipmentStore', {
     state: () => ({
-        euipmentList: [
-            {
-                name: "数字式医用红外热像仪",
-                description: "医学技术as.das.das.d.",
-                id: "JIICM20210012",
-                equipmentId: 'MTI-Economy-C',
-                avator: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            {
-                name: "数字式医用红外热像仪2",
-                description: "医学技术as.das.das.d2.",
-                id: "JIICM20210013",
-                equipmentId: 'MTI-Economy-C',
-                avator: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            {
-                name: "数字式医用红外热像仪3",
-                description: "医学技术as.das.das.d3.",
-                id: "JIICM20210014",
-                equipmentId: 'MTI-Economy-C'
-            }
-        ],
+        euipmentList: [],
         selectDepartmentList: [
             {
                 value: "standard",
@@ -33,50 +15,25 @@ export const useEquipmentStore = defineStore('EquipmentStore', {
                 label: "标准中心2",
             }
         ],
-        currEquipmentInfo: {
-            name: '数字式设备',
-            id: 'JIICM20210012',
-            equipmentId: 'MTI-Economy-C',
-            description: '医学技术as.das.das.d.',
-            classfication: '竞品',
-            equipmentTable: [{
-                key: '1',
-                name: '胡彦斌',
-                createTime: 32,
-                location: '西湖区湖底公园1号',
-            },
-            {
-                key: '2',
-                name: '胡彦祖',
-                age: 42,
-                location: '西湖区湖底公园1号',
-            },],
-            headerPics: [
-                {
-                    id: '1',
-                    src: 'https://img.alicdn.com/imgextra/i3/2204889401/O1CN01Q2ZQ2L1ZQZ0ZQZ0ZQ_!!2204889401.jpg_430x430q90.jpg',
-                },
-                {
-                    id: '2',
-                    src: 'https://img.alicdn.com/imgextra/i3/2204889401/O1CN01Q2ZQ2L1ZQZ0ZQZ0ZQ_!!2204889401.jpg_430x430q90.jpg',
-                }
-            ],
-            equipmentPictures: [
-                {
-                    id: '1',
-                    src: 'https://img.alicdn.com/imgextra/i3/2204889401/O1CN01Q2ZQ2L1ZQZ0ZQZ0ZQ_!!2204889401.jpg_430x430q90.jpg',
-                    overview: '整体图片',
-                },
-                {
-                    id: '2',
-                    src: 'https://img.alicdn.com/imgextra/i3/2204889401/O1CN01Q2ZQ2L1ZQZ0ZQZ0ZQ_!!2204889401.jpg_430x430q90.jpg',
-                    overview: '局部图片',
-                }
-            ]
-        }
+        currEquipmentInfo: {} as CurrEquipmentInfo
     }),
     getters: {
     },
     actions: {
+        async getEquipmentList() {
+            const res = await getEquipmentList()
+            this.euipmentList = res.data.equipmentList
+            return res
+        },
+        async searchEquipment(searchForm: SearchForm) {
+            const res = await searchEquipment(searchForm)
+            this.euipmentList = res.data.equipmentList
+            return res
+        },
+        async getEquipmentInfo(id: string) {
+            const res = await getEquipmentInfo(id)
+            this.currEquipmentInfo = res.data.equipmentInfo
+            return res
+        }
     },
 })

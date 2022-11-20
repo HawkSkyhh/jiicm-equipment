@@ -40,16 +40,17 @@
                 </a-form>
             </div>
             <div class="offsetBottomBtn">
-                <a-button class="searchBtn" @click="searchEquipment">查询设备</a-button>
+                <a-button class="searchBtn" @click="handleSearch">查询设备</a-button>
             </div>
         </div>
         <div class="seachAllWrap">
-            <a-button @click="searchEquipment('all')" class='searchAllBtn '>查看所有设备</a-button>
+            <a-button @click="handleSearch('all')" class='searchAllBtn '>查看所有设备</a-button>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import type { SearchForm } from '@/http/type/searchForm'
 import { ref, watch } from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import { useEquipmentStore } from '@/store/equipmentStore'
@@ -57,7 +58,7 @@ const route = useRoute()
 const router = useRouter()
 const equipmentStore = useEquipmentStore()
 let isShowSelect = ref(false)
-let searchForm = ref({
+let searchForm = ref<SearchForm>({
     searchContent: '',
     property: '',
     department: ''
@@ -70,11 +71,12 @@ watch(() => searchForm.value.property, (value: string) => {
         isShowSelect.value = false
     }
 })
-const searchEquipment = (flag = "") => {
+const handleSearch = async (flag = "") => {
+    equipmentStore.euipmentList = []
     if (flag === 'all') {
-        console.log("all")
+        await equipmentStore.getEquipmentList()
     } else {
-        console.log(searchForm.value)
+        await equipmentStore.searchEquipment(searchForm.value)
     }
     router.push("/equipmentlist")
 }

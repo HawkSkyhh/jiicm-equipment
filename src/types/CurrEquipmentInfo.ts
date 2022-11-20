@@ -1,0 +1,18 @@
+export interface CurrEquipmentInfo {
+    id: string,
+    equipment_name: string,
+    department_name: string,
+    equipment_id: string,
+    equipment_oid: string,
+    equipment_description: string,
+    equipment_classfication: string,
+    alignment: string,
+    create_time: string,
+    nums: string,
+    location: string,
+    owner: string,
+    standard_owner: string,
+    header_pics: { id: string, src: string }[],
+    pics: { id: string, src: string, overview: string }[],
+    equipment_tables: { id: string, equipment_name: string }[],
+}
