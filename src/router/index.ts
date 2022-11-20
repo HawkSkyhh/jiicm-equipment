@@ -9,7 +9,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/homePage",
     component: () => import("@/views/HomePage.vue"),
     meta: {
-      title: "首页"
+      title: "首页",
+      welcomeWord:"欢迎使用联创院设备查询小程序"
     }
   },
   {

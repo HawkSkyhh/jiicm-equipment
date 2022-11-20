@@ -7,13 +7,15 @@
             </div>
         </a-carousel>
         <div class="contentWrap">
-            <div class="title">{{ currEquipmentInfo.name }}</div>
+            <div class="equipmentWord">
+                <div class="title">{{ currEquipmentInfo.name }}</div>
             <div class="titleId">{{ currEquipmentInfo.id }}</div>
             <div class="basicContent">
-                <div class="subTitle">基本参数</div>
+                <div class="subTitle" style=" font-weight:600">基本参数</div>
                 <div class="equipmentId">{{ `设备型号: ${currEquipmentInfo.equipmentId}` }}</div>
                 <div class="classfication">{{ `仪器设备分类: ${currEquipmentInfo.classfication}` }}</div>
                 <div class="description">{{ `产品概述及适用范围 ${currEquipmentInfo.description}` }}</div>
+            </div>
             </div>
             <div class="equipmentTable">
                 <a-table :dataSource="currEquipmentInfo.equipmentTable" :columns="columns" :scroll="{ x: 500 }" />
@@ -77,6 +79,27 @@ const onChange = (currentChange: any) => {
     width: 100%;
 }
 
+.title{
+    font-size:1.2rem;
+    font-weight:600;
+    margin-bottom: 0.5rem;
+}
+.titleId{
+    font-size:1rem;
+    margin-bottom: 1rem;
+}
+.basicContent{
+    font-size:1rem;
+    width: 90%;
+    
+}
+.equipmentWord{
+    border-radius: 0.2rem;
+    box-shadow: 0 0 1px #fff;
+    background-color: white;
+    width: 90%;
+    margin: 0 auto;
+}
 .ant-carousel :deep(.slick-slide) {
     text-align: center;
     height: 33vh;
