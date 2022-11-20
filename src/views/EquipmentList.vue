@@ -42,7 +42,7 @@ text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(255, 255, 255);
+    color: #000;
 }
 .title_id {
     font-size: xx-small;
