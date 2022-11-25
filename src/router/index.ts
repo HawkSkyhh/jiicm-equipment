@@ -6,11 +6,18 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/homePage'
   },
   {
+    path: "/man",
+    component: () => import("@/views/equipmentManager.vue"),
+    meta: {
+      title: "控制台",
+    }
+  },
+  {
     path: "/homePage",
     component: () => import("@/views/HomePage.vue"),
     meta: {
       title: "首页",
-      welcomeWord:"欢迎使用联创院设备查询小程序"
+      welcomeWord: "欢迎使用联创院设备查询小程序"
     }
   },
   {

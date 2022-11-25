@@ -46,6 +46,9 @@
         <div class="seachAllWrap">
             <a-button @click="handleSearch('all')" class='searchAllBtn '>查看所有设备</a-button>
         </div>
+        <div class="managerWrap">
+            <a-button @click="handleMan">man</a-button>
+        </div>
     </div>
 </template>
 
@@ -80,9 +83,18 @@ const handleSearch = async (flag = "") => {
     }
     router.push("/equipmentlist")
 }
+const handleMan = ()=>{
+    router.push('/man')
+}
 </script>
 
 <style scoped>
+.managerWrap{
+    position: absolute;
+    top: 0;
+    width: 1rem;
+    margin: 1rem;
+}
 .all {
     background-image: linear-gradient(to bottom, #1661ab, #ffffff);
     align-items: center;

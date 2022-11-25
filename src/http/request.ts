@@ -9,6 +9,19 @@ const request = new Request({
 })
 
 /**
+ * upload pic in equipment
+ *
+ */
+export const uploadPic = (formData: any, id: string) => request.request({
+  url: `api/equipments/upload/pic?id=${id}`,
+  method: 'POST',
+  data: formData,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
+
+/**
  * get equipmentList
  *
  */
