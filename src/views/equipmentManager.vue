@@ -1,13 +1,27 @@
 <script lang="ts" setup>
 import type { UploadChangeParam, UploadProps } from 'ant-design-vue'
 import { SmileOutlined } from '@ant-design/icons-vue';
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { message } from 'ant-design-vue'
-import { uploadPic } from '@/http/request'
+import { getEquipmentList, uploadPic } from '@/http/request'
+import { ManTableData } from '@/types/ManTableData';
+import { is } from '@babel/types';
 let isShowUploader = ref<boolean>(false)
 let uploading = ref<boolean>(false)
 let currId = ref<string>('')
 let fileList = ref<UploadProps['fileList']>([]);
+let tableData = ref<ManTableData[]>([])
+let isCover = ref<boolean>(false)
+onMounted(async () => {
+    const res = await getEquipmentList()
+    const { data } = res
+    const { equipmentList } = data
+    equipmentList.forEach((equipment: any) => {
+        const { id, name, description } = equipment
+        const tempData: ManTableData = { id, name, description }
+        tableData.value.push(tempData)
+    })
+})
 const columns = [
     {
         name: '设备名',
@@ -25,24 +39,8 @@ const columns = [
     },
 ];
 
-const data = [
-    {
-        id: '1',
-        name: 'John Brown',
-        description: 'New York No. 1 Lake Park',
-    },
-    {
-        id: '2',
-        name: 'Jim Green',
-        description: 'London No. 1 Lake Park',
-    },
-    {
-        id: '3',
-        name: 'Joe Black',
-        description: 'Sidney No. 1 Lake Park',
-    },
-];
-const openUploader = (record:any) => {
+const openUploader = (record: any, _isCover: boolean) => {
+    isCover.value = _isCover
     console.log('open uploader');
     currId.value = record.id
     isShowUploader.value = true
@@ -75,21 +73,8 @@ const handleUpload = async () => {
         formData.append('files[]', file as any);
     });
     uploading.value = true;
-    const res = await uploadPic(formData, currId.value)
+    const res = await uploadPic(formData, currId.value, isCover.value)
     console.log(res)
-    // request('https://www.mocky.io/v2/5cc8019d300000980a055e76', {
-    //     method: 'post',
-    //     data: formData,
-    // })
-    //     .then(() => {
-    //         fileList.value = [];
-    //         uploading.value = false;
-    //         message.success('upload successfully.');
-    //     })
-    //     .catch(() => {
-    //         uploading.value = false;
-    //         message.error('upload failed.');
-    //     });
 };
 const handleRemove: UploadProps['onRemove'] = file => {
     const index = fileList.value.indexOf(file);
@@ -100,7 +85,7 @@ const handleRemove: UploadProps['onRemove'] = file => {
 </script>
 <template>
     <div class="tableWrap">
-        <a-table :columns="columns" :data-source="data">
+        <a-table :columns="columns" :data-source="tableData">
             <template #headerCell="{ column }">
                 <template v-if="column.key === 'name'">
                     <span>
@@ -109,7 +94,6 @@ const handleRemove: UploadProps['onRemove'] = file => {
                     </span>
                 </template>
             </template>
-
             <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'name'">
                     <a>
@@ -118,7 +102,8 @@ const handleRemove: UploadProps['onRemove'] = file => {
                 </template>
                 <template v-else-if="column.key === 'action'">
                     <span>
-                        <a-button type="link" @click="openUploader(record)">上传图片</a-button>
+                        <a-button type="link" @click="openUploader(record, true)">上传封面</a-button>
+                        <a-button type="link" @click="openUploader(record, false)">上传其他图片</a-button>
                     </span>
                 </template>
             </template>
@@ -127,8 +112,7 @@ const handleRemove: UploadProps['onRemove'] = file => {
     <a-modal @ok="handleOk" :keyboard="false" :maskClosable="false" centered title="上传文件"
         v-model:visible="isShowUploader">
         <a-upload-dragger :before-upload="beforeUpload" @remove="handleRemove" :fileList="fileList" name="file"
-            :multiple="true" action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange"
-            @drop="handleDrop">
+            :multiple="true" @change="handleChange" @drop="handleDrop">
             <p class="ant-upload-drag-icon">
                 <inbox-outlined></inbox-outlined>
             </p>

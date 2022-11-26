@@ -12,8 +12,8 @@ const request = new Request({
  * upload pic in equipment
  *
  */
-export const uploadPic = (formData: any, id: string) => request.request({
-  url: `api/equipments/upload/pic?id=${id}`,
+export const uploadPic = (formData: any, id: string, isCover: boolean) => request.request({
+  url: `api/equipments/upload/pic?id=${id}&isCover=${isCover}`,
   method: 'POST',
   data: formData,
   headers: {

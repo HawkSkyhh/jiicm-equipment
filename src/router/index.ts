@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/man",
-    component: () => import("@/views/equipmentManager.vue"),
+    component: () => import("@/views/EquipmentManager.vue"),
     meta: {
       title: "控制台",
     }
@@ -28,11 +28,9 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: "/deailequipment",
+    path: "/detailequipment",
     component: () => import("@/views/DetailEquipment.vue"),
-    meta: {
-      title: "设备详情"
-    }
+    // 加meta.title将会覆盖当前以设备名的标题
   },
   {
     path: "/404",
@@ -50,6 +48,15 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to,from,next)=>{
+  if(to.meta.title){
+    document.title = to.meta.title as string
+  }else[
+    document.title = to.query.title as string
+  ]
+  next()
 })
 
 export default router

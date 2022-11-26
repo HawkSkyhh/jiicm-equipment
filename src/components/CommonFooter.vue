@@ -1,7 +1,7 @@
 <template>
     <div class="footerWrap">
         <div class="footerBox">
-            目前设备信息均由人员手工录入，如存在信息错误请联系标准中心：xxx ，感谢支持！
+            目前设备信息均由人员手工录入，如存在信息错误请联系标准中心：董彩丽，感谢支持！
         </div>
     </div>
 </template>

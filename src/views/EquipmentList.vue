@@ -1,17 +1,16 @@
 <template>
-    <div class="pageHeaderbox">设备查询</div>
-
+    <!-- <div class="pageHeaderbox">设备查询</div> -->
     <div class="listWrap">
-        <a-list item-layout="horizontal" :data-source="euipmentList">
+        <a-list item-layout="horizontal" :data-source="equipmentList">
             <template #renderItem="{ item }">
                 <a-list-item>
-                    <a-list-item-meta :description="item.equipment_description">
+                    <a-list-item-meta :description="item.description">
                         <template #avatar>
-                            <a-avatar :src="item.avator" />
+                            <a-avatar :src="item.avatar" />
                         </template>
                         <template #title>
-                            <div class="title_id">{{ `${item.id} || ${item.equipment_id}` }}</div>
-                            <div @click="turnToDetail(item)">{{ item.equipment_name }}</div>
+                            <div class="title_id">{{ `${item.id} || ${item.type}` }}</div>
+                            <div @click="turnToDetail(item)">{{ item.name }}</div>
                         </template>
                     </a-list-item-meta>
                 </a-list-item>
@@ -27,10 +26,10 @@ import { useEquipmentStore } from '@/store/equipmentStore';
 import { CurrEquipmentInfo } from '@/types/CurrEquipmentInfo';
 const router = useRouter()
 const equipmentStore = useEquipmentStore()
-const euipmentList = ref(equipmentStore.euipmentList)
+const equipmentList = ref(equipmentStore.equipmentList)
 const turnToDetail = (item: CurrEquipmentInfo) => {
     equipmentStore.currEquipmentInfo = item
-    router.push('/deailequipment')
+    router.push({ path: '/detailequipment', query: { title: item.name } })
 }
 </script>
 

@@ -31,7 +31,7 @@
                             </a-col>
                             <a-col :span="18">
                                 <a-select v-model:value="searchForm.department" placeholder="选择部门"
-                                    :options="selectDepartmentList">
+                                    :options="selectDepartmentOptions">
                                 </a-select>
                             </a-col>
                         </a-row>
@@ -57,16 +57,17 @@ import type { SearchForm } from '@/http/type/searchForm'
 import { ref, watch } from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import { useEquipmentStore } from '@/store/equipmentStore'
+import { SelectDepartmentOptions } from '@/http/type/selectDepartmentOptions';
 const route = useRoute()
 const router = useRouter()
 const equipmentStore = useEquipmentStore()
 let isShowSelect = ref(false)
 let searchForm = ref<SearchForm>({
     searchContent: '',
-    property: '',
+    property: 'all',
     department: ''
 })
-let selectDepartmentList = ref(equipmentStore.selectDepartmentList)
+const selectDepartmentOptions = ref<SelectDepartmentOptions[]>(equipmentStore.selectDepartmentList)
 watch(() => searchForm.value.property, (value: string) => {
     if (value === 'yard') {
         isShowSelect.value = true
@@ -75,7 +76,7 @@ watch(() => searchForm.value.property, (value: string) => {
     }
 })
 const handleSearch = async (flag = "") => {
-    equipmentStore.euipmentList = []
+    equipmentStore.equipmentList = []
     if (flag === 'all') {
         await equipmentStore.getEquipmentList()
     } else {
