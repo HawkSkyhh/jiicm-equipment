@@ -6,7 +6,7 @@
                 <a-list-item>
                     <a-list-item-meta :description="item.description">
                         <template #avatar>
-                            <a-avatar :src="item.avatar" />
+                            <a-avatar :src="item.avatar_path" />
                         </template>
                         <template #title>
                             <div class="title_id">{{ `${item.id} || ${item.type}` }}</div>

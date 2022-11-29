@@ -48,3 +48,12 @@ export const getEquipmentInfo = (id: string) => request.request({
   url: `api/equipments/${id}`,
   method: 'GET',
 })
+
+/**
+ * get equipment pics by id
+ * 
+ */
+ export const getEquipmentPics= (id: string) => request.request({
+  url: `api/equipments/pics/${id}`,
+  method: 'GET',
+})

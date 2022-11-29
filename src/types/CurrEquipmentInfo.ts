@@ -12,7 +12,7 @@ export interface CurrEquipmentInfo {
     owner: string,
     standard_owner: string,
     avatar_path: string,
-    pics: { id: string, src: string}[],
+    pics: { id: string, pic_path: string}[],
     tables: {
         oid: string, create_time: string, location: string,
         alignment: string, owner: string, standard_owner: string

@@ -1,0 +1,1 @@
+# FROM dp-docker-registry:5000/centos:7
